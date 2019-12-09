@@ -1,0 +1,181 @@
+package org.drools.workshop;
+import org.drools.workshop.model.*;
+
+/*
+    Rango de dificultad:
+    -5 (< -81): Extremadamente facil
+    -4 (-80 - -61)
+    -3 (-60 - -41)
+    -2 (-40 - -21)
+    -1 (-20 - -1)
+    0 (0 - 10) - Normal
+    1 (11 - 25)
+    2 (26 - 50)
+    3 (51 - 75)
+    4 (76 - 90)
+    5 (> 90) - Extremadamente dificil
+*/
+//Cargar preguntas
+rule "Cargar preguntas"
+    when
+    then
+        //Mate
+        insert(new Pregunta("Matematicas", "Resuelve: \n 1 + 1", "2", "La respuesta es 2.", -5, 1));
+        insert(new Pregunta("Matematicas", "Resuelve: \n 2 - 5", "-3", "La respuesta es -3.", -4, 1));
+        insert(new Pregunta("Matematicas", "Resuelve: \n 3 * 6", "18", "La respuesta es 18.", -3, 1));
+        insert(new Pregunta("Matematicas", "Resuelve: \n 50 / 5", "10", "La respuesta es 10.", -2, 1));
+        insert(new Pregunta("Matematicas", "Resuelve: \n 1 + 4 * 7", "29", "La respuesta es 29.", -1, 1));
+        insert(new Pregunta("Matematicas", "Encuentra X: \n 6 = x - 3", "9", "Se resulve primero la multiplicacion por la herarquia y despues la suma \n La respuesta es 9.", 0, 1));
+        insert(new Pregunta("Matematicas", "Evalua la siguente funcion y escribe el valor de y: \n x = 4 \n y = 5x - 4", "16", "Al evaluar la x en la  funcion, queda: y = 5 * 4 - 4 \n La respuesta es 16.", 1, 1));
+        insert(new Pregunta("Matematicas", "Encuentra el punto origen de esta funcion: \n y = 4x + 4 \n A- y=4 x=-1 \n B- y=4 x=1 \n C- y=-4 x=1 \n D- y=-4 x=-1", "A", "Para sacar la y igualando la x a 0 y sacar la x igualando la y en 0 \n La respuesta es A.", 2, 1));
+        insert(new Pregunta("Matematicas", "Deriva y evalua la funcion: \n x = 5 \n y = (x^2) + 4x -123878", "14", "Al derivar: y' = 2x + 4 y al evaluar la x: y'= 2 * 5 + 4 \n La respuesta es 14.", 3, 1));
+        insert(new Pregunta("Matematicas", "Integra y evalua la funcion: \n x = 5 \n y' = 2x + 4 \n A- y = 18 + c \n B- y = 45 + c \n C- y = 14 \n D- y = 14 + c", "2", "Al integrar: y = (x^2) + 4x + c y al evaluar la x: y = (5^2) + 4 * 5 + c \n La respuesta es B.", 4, 1));
+        insert(new Pregunta("Matematicas", "Encuentra x, y y z tal que: \n (x^3)+(y^3)+(z^3)=z \n Por cada k que va de 1 a 100 \n A- x=-1 y=-1 z=2 \n B- x=42 y=-1 z=80 \n C- x=-80538738812075974 y=80435758145817515 z=12602123297335631 \n D- x=-1 y=-1 z=-2", "C", "La respuesta es C.", 5, 1));
+
+        insert(new Pregunta("Matematicas", "Resuelve: \n 1 + 4 * 8", "33", "La respuesta es 33", -1, 1));
+        insert(new Pregunta("Matematicas", "Evalua la siguente funcion y escribe el valor de y: \n x = 2 \n y = 10x - 1", "19", "Al evaluar la x en la  funcion, queda: y = 10 * 2 - 1 \n La respuesta es 19.", 1, 1));
+        insert(new Pregunta("Matematicas", "Encuentra el punto origen de esta funcion: \n y = 3x - 6 \n A-  y=6 x=2 \n B- y=-6 x=-2 \n C-  y=6 x=-2 \n D- y=-6 x=2", "D", "Para sacar la y igualando la x a 0 y sacar la x igualando la y en 0 \n La respuesta es D.", 2, 1));
+        //Historia
+        insert(new Pregunta("Historia", "Partido Político que buscaba establecer en México una República Federal:", "Federalistas", "La respuesta es el partido Federalista.", -5, 1));
+        insert(new Pregunta("Historia", "En el desarrollo de la Guerra de Reforma pelearon: \n A) Liberales contra Conservadores \n B) Liberales contra norteamericanos \n C)Liberales y Franceses", "A", "La respuesta es A.", -4, 1));
+        insert(new Pregunta("Historia", "En la Batalla del 5 de Mayo en Puebla triunfó el ejército mexicano bajo las órdenes de: \n A) Juarez \n B) Santa Anna \n C) Zaragoza", "C", "La respuesta es C.", -3, 1));
+        insert(new Pregunta("Historia", "Guerra que sostuvo México contra Francia durante el periodo de Anastasio Bustamante. \n A) Guerra de los pasteles \n B) Guerra Cristera \n C) Ambas", "B", "La respuesta es B.", -2, 1));
+        insert(new Pregunta("Historia", "Organizaron la convención de Londres para invadir a México. \n A) Francia, Prusia y Austria \n B) Francia, Inglaterray España \n C) Francia, Inglaterra y E.U.A", "B", "La respuesta es B", -1, 1));
+        insert(new Pregunta("Historia", "La cultura más antigua que se desarrolló en Mesoamérica y a la que se conoce con el nombre de Cultura Madre fue:", "Olmeca", "La respuesta es la cultura olmeca", 0, 1));
+        insert(new Pregunta("Historia", "Lideres de la Independencia que lograron la Consumación de nuestra Independencia. \n A) Benito Juarez y Hemenegildo Galeana \n B) Agustin de Iturbide y Vicente Guerrero \n C) Miguel Hidalgo y Morelos", "B", "La respuesta es B, las otras opciones contienen a lideres que no lograron sobrevivir al termino de la guerra", 1, 1));
+        insert(new Pregunta("Historia", "Forma de gobierno que permaneció desde 1535 hasta 1821. \n A)Real Audiencia \n B) Virreinato \n C) Real Consejo de Indias", "B", "Mexico fue gobernado bajo el sistema de Virreinato de 1535 hasta 1821.", 2, 1));
+        insert(new Pregunta("Historia", "Objetivos de las ideas políticas de los hermanos Flores Magón y de otros integrantes de los clubes liberales.\n A) Apoyar la reelecion de Diaz \n B) Defender las libertades individuales, la justicia social y la no-reelecion \n C) Cambiar al sistema de gobierno democratico por una dictadura", "B", "La respuesta es la B", 3, 1));
+        insert(new Pregunta("Historia", "Causa por la que dejó de funcionar con éxito la política de desarrollo estabilizador en la década de 1970. \n A)Venta excesiva de materias primas \n B)Exagerado incremento de la poblacion del pais \n C)Moratoria al pago de la deuda externa", "B", "La respuesta es B.", 4, 1));
+        insert(new Pregunta("Historia", "Fecha en la que se funso el IMSS(DD/MM/AAAA)", "19/01/1943", "El IMSS fue fundado el 19 de enero de 1943", 5, 1));
+
+        insert(new Respuesta());
+end
+
+rule "Debug"
+    when
+    then
+        System.out.println("Entro");
+end
+
+//Determinar los puntos de acuerdo a las respuestas
+rule "Determinar puntos positivos"
+    when
+        $r : Respuesta(answer == true)
+        $a : Alumno(name == $r.name && semester == $r.semester && course == $r.course)
+    then
+        $a.setPoint($a.getPoint() + 10);
+        retract($r);
+        update($a);
+end
+
+rule "Determinar puntos negativos"
+    when
+        $r : Respuesta(answer == false)
+        $a : Alumno(name == $r.name && semester == $r.semester && course == $r.course)
+    then
+        retract($r);
+        $a.setPoint($a.getPoint() - 20);
+        update($a);
+end
+/*
+    Rango de dificultad:
+    -5 (< -81): Extremadamente facil
+    -4 (-80 - -61)
+    -3 (-60 - -41)
+    -2 (-40 - -21)
+    -1 (-20 - -1)
+    0 (0 - 10) - Normal
+    1 (11 - 25)
+    2 (26 - 50)
+    3 (51 - 75)
+    4 (76 - 90)
+    5 (> 90) - Extremadamente dificil
+*/
+//Determinar que pregunta dar de acuerdo a puntos, semestre y curso
+rule "Determinar pregunta -5"
+    when
+        $a : Alumno(point <= -81)
+        $p : Pregunta(semester == $a.semester && course == $a.course && difficulty == -5)
+    then
+        $a.setPregunta($p);
+end
+
+rule "Determinar pregunta -4"
+    when
+        $a : Alumno(point > -81 && point <= -61)
+        $p : Pregunta(semester == $a.semester && course == $a.course && difficulty == -4)
+    then
+        $a.setPregunta($p);
+end
+
+rule "Determinar pregunta -3"
+    when
+        $a : Alumno(point > -61 && point <= -41)
+        $p : Pregunta(semester == $a.semester && course == $a.course && difficulty == -3)
+    then
+        $a.setPregunta($p);
+end
+
+rule "Determinar pregunta -2"
+    when
+        $a : Alumno(point > -41 && point <= -21)
+        $p : Pregunta(semester == $a.semester && course == $a.course && difficulty == -2)
+    then
+        $a.setPregunta($p);
+end
+
+rule "Determinar pregunta -1"
+    when
+        $a : Alumno(point > -21 && point <= -1)
+        $p : Pregunta(semester == $a.semester && course == $a.course && difficulty == -1)
+    then
+        $a.setPregunta($p);
+end
+
+rule "Determinar pregunta 0"
+    when
+        $a : Alumno(point > -1 && point <= 10)
+        $p : Pregunta(semester == $a.semester && course == $a.course && difficulty == 0)
+    then
+        $a.setPregunta($p);
+end
+
+rule "Determinar pregunta 1"
+    when
+        $a : Alumno(point > 10 && point <= 25)
+        $p : Pregunta(semester == $a.semester && course == $a.course && difficulty == 1)
+    then
+        $a.setPregunta($p);
+end
+
+rule "Determinar pregunta 2"
+    when
+        $a : Alumno(point > 25 && point <= 50)
+        $p : Pregunta(semester == $a.semester && course == $a.course && difficulty == 2)
+    then
+        $a.setPregunta($p);
+end
+
+rule "Determinar pregunta 3"
+    when
+        $a : Alumno(point > 50 && point <= 75)
+        $p : Pregunta(semester == $a.semester && course == $a.course && difficulty == 3)
+    then
+        $a.setPregunta($p);
+end
+
+rule "Determinar pregunta 4"
+    when
+        $a : Alumno(point > 75 && point <= 90)
+        $p : Pregunta(semester == $a.semester && course == $a.course && difficulty == 4)
+    then
+        $a.setPregunta($p);
+end
+
+rule "Determinar pregunta 5"
+    when
+        $a : Alumno(point > 90)
+        $p : Pregunta(semester == $a.semester && course == $a.course && difficulty == 5)
+    then
+        $a.setPregunta($p);
+end
